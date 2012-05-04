@@ -43,7 +43,7 @@ public class ScannerImpl implements Scanner {
 	}
 
 	@Override
-	public ScanOutput scan() {
+	public ScanOutputImpl scan() {
 		this.init();
 
 		nextCharachter();
@@ -57,25 +57,25 @@ public class ScannerImpl implements Scanner {
 		}
 
 		if (lexem.equals("+")) {
-			return new ScanOutput(PLUS, lexem, 0);
+			return new ScanOutputImpl(PLUS, lexem, 0);
 		} else if (lexem.equals("-"))
-			return new ScanOutput(MINUS, lexem, 0);
+			return new ScanOutputImpl(MINUS, lexem, 0);
 		else if (lexem.equals("/"))
-			return new ScanOutput(GETEILT, lexem, 0);
+			return new ScanOutputImpl(GETEILT, lexem, 0);
 		else if (lexem.equals("*"))
-			return new ScanOutput(MAL, lexem, 0);
+			return new ScanOutputImpl(MAL, lexem, 0);
 		else if (lexem.equals("^"))
-			return new ScanOutput(HOCH, lexem, 0);
+			return new ScanOutputImpl(HOCH, lexem, 0);
 		else if (lexem.equals("("))
-			return new ScanOutput(KLAMMER_AUF, lexem, 0);
+			return new ScanOutputImpl(KLAMMER_AUF, lexem, 0);
 		else if (lexem.equals(")"))
-			return new ScanOutput(KLAMMER_ZU, lexem, 0);
+			return new ScanOutputImpl(KLAMMER_ZU, lexem, 0);
 		else if (lexem.equals("."))
-			return new ScanOutput(FALSCHE_KONST, lexem, FEHLER);
+			return new ScanOutputImpl(FALSCHE_KONST, lexem, FEHLER);
 		else if (lexem.equals(";")) {
-			return new ScanOutput(ENDE, lexem, 0);
+			return new ScanOutputImpl(ENDE, lexem, 0);
 		} else if (!isNumber(lexem))
-			return null;// new ScanOutput(FALSCHES_ZEICHEN, lexem, FEHLER);
+			return new ScanOutputImpl(FALSCHES_ZEICHEN, lexem, FEHLER);
 		else if (isNumber(lexem)) {
 
 			while (isNumber(lexem)) {
@@ -87,33 +87,23 @@ public class ScannerImpl implements Scanner {
 				else if (!isNumber(lexem)) {
 
 					arrayPosition--;
-					return new ScanOutput(ZAHL, lexem.substring(0,
+					return new ScanOutputImpl(ZAHL, lexem.substring(0,
 							lexem.length() - 1), 0);
 				} else if (next == null)
-					return new ScanOutput(ZAHL, lexem, 0);
+					return new ScanOutputImpl(ZAHL, lexem, 0);
 
 			}
 		}
 
-		return new ScanOutput(FALSCHES_ZEICHEN, lexem, FEHLER);
+		return new ScanOutputImpl(FALSCHES_ZEICHEN, lexem, FEHLER);
 	}
 
 	public boolean isNumber(String regex) {
 		return Pattern.matches("([0-9]*\\.)?[0-9]+", regex);
 	}
-
-	public static void main(String[] args) {
-		ScannerImpl sc = new ScannerImpl();
-		ScanOutput out = null;
-		while ((out = sc.scan()) != null) {
-
-			System.out.println(out.getToken() + " | " + out.getLexem() + " | "
-					+ out.getErrorCode());
-
-			if (out.getToken() == ENDE)
-				break;
-
-		}
+	
+	public int getIndex(){
+		return arrayPosition;
 	}
 
 }

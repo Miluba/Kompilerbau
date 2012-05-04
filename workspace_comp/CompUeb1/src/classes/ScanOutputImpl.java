@@ -1,12 +1,14 @@
 package classes;
 
-public class ScanOutput {
+import interfaces.ScanOutput;
+
+public class ScanOutputImpl implements ScanOutput {
 	
 	private int token, error;
 	private String lexem;
 	
 	
-	public ScanOutput(int token, String lexem, int error){
+	public ScanOutputImpl(int token, String lexem, int error){
 		this.token = token;
 		this.lexem = lexem;
 		this.error = error;
