@@ -103,7 +103,7 @@ public class Parser {
 			out = scanner.scan();
 			sa4=pot_Term();
 			
-			ha8=Math.pow(sa4, sa3);
+			ha8=Math.pow(sa3, sa4);
 			ha6=ha8; 
 		}
 		return ha6;
